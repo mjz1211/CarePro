@@ -1,0 +1,76 @@
+﻿@model IEnumerable<FileUploadsInAspNetMvc.Models.CaregiverRecord>
+
+@{
+    ViewBag.Title = "照護紀錄";
+    string link1 = "/CaregiverRecords/Index";
+    string link2 = "/CaregiverRecords/BloodPressure";
+
+
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>
+    @DateTime.Now.Month 月
+    @DateTime.Now.Day 日
+</h3>
+<button type="button" class="btn btn-danger" onclick="location.href = '@link1'">照護紀錄</button>
+
+<button type="button" class="btn btn-info" onclick="location.href = '@link2'">生理紀錄</button>
+
+<table class="table table-hover">
+    <thead class="alert-info">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CareDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CareTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CareFeedback)
+            </th>
+
+        </tr>
+
+    </thead>
+
+    @foreach (var item in Model)
+    {
+
+        string description = item.CareTitle + "(" + item.CareText + ")";
+        string feedback = item.CareFeedback;
+        string feedbackImg = "/Content/Images/happy.png";
+        switch (feedback)
+        {
+            case "很好":
+                feedbackImg = "/Content/Images/happy.png";
+                break;
+            case "一般":
+                feedbackImg = "/Content/Images/surprised.png";
+                break;
+            case "待改善":
+                feedbackImg = "/Content/Images/sad.png";
+                break;
+            default:
+                break;
+        }
+
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareDateTime)
+            </td>
+            <td>
+                @description
+            </td>
+            <td>
+                <img src="@feedbackImg" />
+                @Html.DisplayFor(modelItem => item.CareFeedback)
+
+            </td>
+
+        </tr>
+    }
+
+</table>

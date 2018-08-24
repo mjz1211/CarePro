@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "RouteMap";
+
+    string lat = "24.998244", lng = "121.549549";
+    if (ViewBag.Lng != null) {
+        lng = ViewBag.Lng;
+    }
+
+    if (ViewBag.Lat != null) {
+        lat = ViewBag.Lat;
+    }
+
+
+}
+
+<style>
+    #mapContainer {
+    height:500px;
+    width:100%;
+    }
+</style>
+
+<h2>RouteMap</h2>
+<script src="https://js.api.here.com/v3/3.0/mapsjs-core.js"
+        type="text/javascript" charset="utf-8"></script>
+<script src="https://js.api.here.com/v3/3.0/mapsjs-service.js"
+        type="text/javascript" charset="utf-8"></script>
+<div id="mapContainer" >
+
+</div>
+
+<script type="text/javascript">
+    var platform = new H.service.Platform({
+        'app_id': 'dnqUAGxmGAD4CnRTk11m',
+        'app_code': 'kNWmh_jvezV8Wn-dCoTUag'
+    });
+    // Retrieve the target element for the map:
+    var targetElement = document.getElementById('mapContainer');
+
+    // Get the default map types from the platform object:
+    var defaultLayers = platform.createDefaultLayers();
+
+    // Instantiate the map:
+    var map = new H.Map(
+        document.getElementById('mapContainer'),
+        defaultLayers.normal.map,
+        {
+            zoom: 16,
+            center: { lat: 25.000754, lng: 121.552343 } //25.000754, 121.552343
+        });
+
+    // Create the parameters for the routing request:
+    var routingParameters = {
+        // The routing mode:
+        'mode': 'fastest;car',
+        // The start point of the route: 25.002040, 121.553544
+        'waypoint0': 'geo!25.002040,121.553544',
+        // The end point of the route: 25.000419, 121.550818
+        'waypoint1': 'geo!@lat,@lng',
+        // To retrieve the shape of the route we choose the route
+        // representation mode 'display'
+        'representation': 'display'
+    };
+
+    // Define a callback function to process the routing response:
+    var onResult = function (result) {
+        var route,
+            routeShape,
+            startPoint,
+            endPoint,
+            linestring;
+        if (result.response.route) {
+            // Pick the first route from the response:
+            route = result.response.route[0];
+            // Pick the route's shape:
+            routeShape = route.shape;
+
+            // Create a linestring to use as a point source for the route line
+            linestring = new H.geo.LineString();
+
+            // Push all the points in the shape into the linestring:
+            routeShape.forEach(function (point) {
+                var parts = point.split(',');
+                linestring.pushLatLngAlt(parts[0], parts[1]);
+            });
+
+            // Retrieve the mapped positions of the requested waypoints:
+            startPoint = route.waypoint[0].mappedPosition;
+            endPoint = route.waypoint[1].mappedPosition;
+
+            // Create a polyline to display the route:
+            var routeLine = new H.map.Polyline(linestring, {
+                style: { strokeColor: 'blue', lineWidth: 10 }
+            });
+
+            // Create a marker for the start point:
+            var startMarker = new H.map.Marker({
+                lat: startPoint.latitude,
+                lng: startPoint.longitude
+            });
+
+            // Create a marker for the end point:
+            var endMarker = new H.map.Marker({
+                lat: endPoint.latitude,
+                lng: endPoint.longitude
+            });
+
+            // Add the route polyline and the two markers to the map:
+            map.addObjects([routeLine, startMarker, endMarker]);
+
+            // Set the map's viewport to make the whole route visible:
+            map.setViewBounds(routeLine.getBounds());
+        }
+    };
+
+    // Get an instance of the routing service:
+    var router = platform.getRoutingService();
+
+    // Call calculateRoute() with the routing parameters,
+    // the callback and an error callback function (called if a
+    // communication error occurs):
+    router.calculateRoute(routingParameters, onResult,
+        function (error) {
+            alert(error.message);
+        });
+
+</script>

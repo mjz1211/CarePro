@@ -1,0 +1,69 @@
+﻿@model IEnumerable<FileUploadsInAspNetMvc.Models.CaregiverDay>
+@{
+    ViewBag.Title = "照護設定";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<div class="form-group">
+    <div class="control-label col-md-2">住址</div>
+    <div class="col-md-10">
+        <input class="form-control" value="台北市興隆路2段301巷" />
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="control-label col-md-2">照護人語言</div>
+    <div class="col-md-10">
+        <select class="form-control">
+            <option selected>印尼</option>
+            <option>英文</option>
+            <option>越南文</option>
+
+        </select>
+    </div>
+</div>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-hover">
+    <thead class="alert-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CareTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CareText)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CareDateTime)
+            </th>
+            <th></th>
+        </tr>
+
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CareText)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CareDateTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
+            </td>
+        </tr>
+    }
+
+</table>

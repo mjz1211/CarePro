@@ -1,0 +1,121 @@
+﻿@model FileUploadsInAspNetMvc.Models.CaregiverDay
+
+@{
+    ViewBag.Title = "Create";
+
+    List<SelectListItem> careTitleSelectItemList = new List<SelectListItem>();
+
+    careTitleSelectItemList.Add(new SelectListItem()
+    {
+        Text = "照護安全",
+        Value = "照護安全",
+        Selected = true
+    });
+
+    careTitleSelectItemList.Add(new SelectListItem()
+    {
+        Text = "用藥安全",
+        Value = "用藥安全",
+        Selected = false
+    });
+
+    careTitleSelectItemList.Add(new SelectListItem()
+    {
+        Text = "散步地圖",
+        Value = "散步地圖",
+        Selected = false
+    });
+
+    careTitleSelectItemList.Add(new SelectListItem()
+    {
+        Text = "快樂照片",
+        Value = "快樂照片",
+        Selected = false
+    });
+
+    careTitleSelectItemList.Add(new SelectListItem()
+    {
+        Text = "照護紀錄",
+        Value = "照護紀錄",
+        Selected = false
+    });
+
+    careTitleSelectItemList.Add(new SelectListItem()
+    {
+        Text = "檢視報告",
+        Value = "檢視報告",
+        Selected = false
+    });
+
+
+    careTitleSelectItemList.Add(new SelectListItem()
+    {
+        Text = "照護設定",
+        Value = "照護設定",
+        Selected = false
+    });
+}
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>CaregiverDay</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.CareTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.CareTitle, careTitleSelectItemList, htmlAttributes: new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(model => model.CareTitle, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CareText, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CareText, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.CareText, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CareDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" name="CareDateTime" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-time"></span>
+                </span>
+            </div>
+            <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker1').datetimepicker({
+                            format: 'HH:mm',
+                            defaultDate: moment.utc("07:00", "HH:mm")
+                        });
+                    });
+            </script>
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
