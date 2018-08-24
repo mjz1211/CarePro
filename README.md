@@ -1,5 +1,7 @@
 ﻿# CarePro
 
+<a href="https://github.com/mjz1211/CarePro/blob/master/CarePro_Slide.pdf">Slide</a>
+<
 
 
 <img src="https://github.com/mjz1211/CarePro/blob/master/FileUploadsInAspNetMvc/Content/Images/IMG_6717.PNG" width="300"/>
