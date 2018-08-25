@@ -1,6 +1,5 @@
 ﻿# CarePro
-# [Demo](https://www.youtube.com/watch?v=FCXRXQvm67k)
-# [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/FCXRXQvm67k/0.jpg)](https://www.youtube.com/watch?v=FCXRXQvm67k)
+# [Demo](https://www.youtube.com/watch?v=FCXRXQvm67k&hd=1)
 
 <h3>CarePro is a line application.</h3>
 
