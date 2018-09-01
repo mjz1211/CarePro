@@ -1,7 +1,7 @@
 ﻿# CarePro
 # [Demo](https://www.youtube.com/watch?v=Jd4vZEDCjzM&hd=1)
 
-<h3>CarePro is a line application.</h3>
+<h3>CarePro is a Line application.</h3>
 
 <a href="https://github.com/mjz1211/CarePro/blob/master/slide.pdf">Slide</a>
 
